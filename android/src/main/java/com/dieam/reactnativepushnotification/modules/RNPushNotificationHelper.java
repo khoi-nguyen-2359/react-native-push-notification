@@ -229,6 +229,12 @@ public class RNPushNotificationHelper {
             bundle.putBoolean("userInteraction", true);
             intent.putExtra("notification", bundle);
 
+            String deepLink = bundle.getString("deepLink");
+            if (!TextUtils.isEmpty(deepLink)) {
+                intent.setData(Uri.parse(deepLink));
+                intent.setAction(Intent.ACTION_VIEW);
+            }
+
             if (!bundle.containsKey("playSound") || bundle.getBoolean("playSound")) {
                 Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 String soundName = bundle.getString("soundName");
